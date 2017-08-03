@@ -1,0 +1,212 @@
+@media (max-width:875px)
+{
+    .image{
+        display: none;
+    }
+    footer div{
+        text-align: center;
+        flex-direction: column;
+        padding:10px 0 !important;
+    }
+    .footer_nav{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .footer_ul{
+        text-align: center;
+        margin:0 auto;
+        justify-content: center;
+        max-width: 360px;
+    }
+}
+@media (max-width: 450px) {
+    article{
+        margin-top: 0 !important;
+    }
+    .login_form, .rigth_form{
+        background-color: transparent !important;
+        border:none !important;
+        max-width: 100% !important;
+    }
+    .form_input_text{
+        background-color: transparent !important;
+    }
+}
+html{
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+}
+body{
+    margin:0;
+    background-color: #fafafa;
+}
+div{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+}
+ .image{
+    background-image: url("./main_image.png");
+    align-self: center;
+    background-position: 0 0;
+    background-size:  454px 618px;
+    height: 618px;
+    margin: 30px 0 auto 0;
+    margin-left: 35px;
+    margin-right: 15px;
+    flex-basis: 454px;
+     background-color: #fafafa;
+     border:none;
+     outline: none;
+}
+ .rigth_form{
+    vertical-align: baseline;
+    max-width: 350px;
+    align-items: stretch;
+    margin-top:12px;
+    justify-content: center;
+     flex-direction: column;
+}
+ .form{
+     display: flex;
+     flex-direction: column;
+ }
+ .rigth_form .login_form{
+     background-color: #ffffff;
+     border: 1px solid #e6e6e6;
+     padding: 10px 0;
+     margin: 0 0 10px;
+ }
+ .rigth_form h1{
+     margin:22px auto 8px;
+     width:175px;
+     background-image: url("./total_image.png");
+     background-repeat: no-repeat;
+     height: 51px;
+     text-indent: 110%;
+     overflow: hidden;
+ }
+ .form_h2{
+     margin:0px 40px 10px;
+     text-align: center;
+     font-size: 17px;
+     font-weight:600;
+ }
+ .form_span{
+     margin:8px 40px;
+ }
+ .form_button{
+     background-color: #3897f0;
+     border-color: #3897f0;
+     border-style: solid;
+     font-weight: 600;
+     width:100%;
+     border-radius: 3px;
+     color: #ffffff;
+ }
+ .form_highline{
+     height: 1px;
+     background-color: #c7c7c7;
+     flex-grow: 1;
+     top: .5em;
+     position: relative;
+ }
+ .form_or{
+     display: flex;
+     flex-direction: row;;
+     position: relative;
+     margin:10px 40px 18px;
+ }
+ .or_or{
+     margin:0 18px;
+ }
+ .form_input_text_div{
+     position: relative;
+     margin:0 40px 6px;
+ }
+ .form_input_text{
+     width: 100%;
+     border: 1px solid #efefef;
+     font-size:14px;
+     padding:9px 8px 7px;
+ }
+ .form_p{
+     margin:10px 60px;
+     font-size:14px;
+     text-align: center;
+ }
+ .login_form{
+     margin:15px;
+     text-align: center;
+     flex-direction: column;
+ }
+ .login_form p a{
+     text-decoration: none;
+     color: #3897f0;
+ }
+ .down_form{
+     margin-top: 10px;
+     position: relative;
+     flex-direction: column;
+ }
+ .down_form p{
+     margin:10px 20px;
+     text-align: center;
+     font-size:14px;
+ }
+ .down_icon{
+     flex-direction: row;
+     justify-content: center;
+ }
+ .down_icon img{
+     height: 40px;
+     margin-right: 8px;
+ }
+article{
+    display: flex;
+    margin:30px 0 auto 0;
+    width: 100%;
+    justify-content: center;
+}
+main{
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+}
+footer{
+    padding: 0 20px;
+}
+footer div{
+    padding:38px 0;
+    max-width: 935px;
+    width: 100%;
+    font-size:12px;
+    justify-content: space-between;
+}
+footer div nav{
+    max-width:100%;
+    font-weight: 600;
+}
+.footer_ul{
+    list-style: none;
+    flex-direction: row;
+    padding:0;
+    margin: 0;
+    margin-right: 16px;
+    margin-bottom:3px;
+}
+.footer_ul li{
+    display: inline-block;
+    margin-bottom: 7px;
+    margin-right: 16px;
+}
+a{
+    text-decoration: none;
+}
+.footer_span{
+    color: #999;
+}
