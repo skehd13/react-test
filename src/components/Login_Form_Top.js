@@ -25,7 +25,7 @@ class Login_Form_Top extends React.Component{
             <div className="login_form">
                 <h1>INSTAGRAM</h1>
                 <div>
-                    <form className="form">
+                    <form action="http://localhost:1337/insert" className="form">
                         <h2 className="form_h2">친구들의 사진과 동영상을 보려면 가입하세요</h2>
                         <span className="form_span"><button className="form_button">FACEBOOK으로 로그인</button></span>
                         <div className="form_or">
@@ -33,12 +33,10 @@ class Login_Form_Top extends React.Component{
                             <div className="or_or">또는</div>
                             <div className="form_highline"></div>
                         </div>
-                        <div className="form_input_text_div"><input type="text" id="input_phone" className="form_input_text" placeholder="휴대폰 번호 또는 이메 주소"
-                                                                    defaultValue={this.state.phoneValue} value={this.props.phone} onChange={this.update}/></div>
-                        <div className="form_input_text_div"><input type="text" id="input_name" className="form_input_text" placeholder="성명"
-                                                                    defaultValue={this.state.nameValue} value={this.props.name} onChange={this.update}/></div>
-                        <div className="form_input_text_div"><input type="text" className="form_input_text" placeholder="사용자 이름" value={this.props.name}/></div>
-                        <div className="form_input_text_div"><input type="text" className="form_input_text" placeholder="비밀번호" value={this.props.phone}/></div>
+                        <div className="form_input_text_div"><input type="text" name="phone" id="input_phone" className="form_input_text" placeholder="휴대폰 번호 또는 이메일 주소"/></div>
+                        <div className="form_input_text_div"><input type="text" name="userName" id="input_name" className="form_input_text" placeholder="성명"/></div>
+                        <div className="form_input_text_div"><input type="text" name="id" className="form_input_text" placeholder="사용자 이름" /></div>
+                        <div className="form_input_text_div"><input type="password" name="password" className="form_input_text" placeholder="비밀번호" /></div>
                         <span className="form_span"><button className="form_button">가입</button></span>
                         <p className="form_p">가입하시면 Instagram의 <a href="">약관</a> 및 <a href="">개인정보 처리방침</a>에 동의하게 됩니다</p>
                     </form>
