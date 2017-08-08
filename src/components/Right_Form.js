@@ -80,20 +80,29 @@ class Right_Form extends React.Component{
     //     })
     //     this.render()
     // }
+    constructor(props){
+        super(props)
+        this.state = {
+            loginState:0
+        }
+        this.setLoginState = this.setLoginState.bind(this)
+    }
+    setLoginState(state){
+        this.setState({
+            loginState:state
+        })
+        console.log(this.state.loginState)
+    }
     render(){
         return(
             <div className="rigth_form">
                 <Login_Form_Top
-                    // phone={this.state.phone}
-                    // userName={this.state.userName}
-                    // id={this.state.id}
-                    // password={this.state.password}
-                    // loginState={this.state.login}
-                    // login={this.login}
-                    // insert={this.insert}
-                    // logout={this.logout}
+                    loginState={this.state.loginState}
+                    setLoginState={this.setLoginState}
                 />
-                <Login_From_Bottom/>
+                <Login_From_Bottom
+                    loginState={this.state.loginState}
+                    setLoginState={this.setLoginState}/>
                 <Down_Form/>
             </div>
         );

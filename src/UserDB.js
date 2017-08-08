@@ -8,7 +8,7 @@ exports.insert = function (request, reply) {
         }
     }).then(function (result) {
         if (result.length > 0){
-            // reply('exists id')
+            reply.status(400)
         }else {
             user.create({
                 id:request.payload.id,

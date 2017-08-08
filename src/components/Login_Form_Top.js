@@ -6,7 +6,7 @@ class Login_Form_Top extends React.Component{
         super(props)
 
         this.state = {
-            login:0,
+            // login:0,
             id:'',
             password:'',
             phone:'',
@@ -19,7 +19,11 @@ class Login_Form_Top extends React.Component{
     //회원가입
     insert(event){
         event.preventDefault();
-        console.log(this.id.value,this.password.value, this.phone.value, this.userName.value)
+        console.log(this.id.value, this.phone.value, this.userName.value)
+        if (this.id.value == '' || this.password.value =='' || this.userName.value =='' || this.phone.value == ''){
+            alert('모든정보를 입력해주세요')
+            return
+        }
         fetch('http://localhost:1337/user',{
             method:'post',
             headers: {'Content-Type':'application/json'},
@@ -30,28 +34,35 @@ class Login_Form_Top extends React.Component{
                 userName:this.userName.value
             })
         }).then(response => {
-            console.log(response)
-            console.log("insert OK")
-            this.setState({
-                login:1
-            })
-            this.render()
+            if (response.status == 200){
+                console.log(response.status)
+                console.log("insert OK")
+                this.props.setLoginState(1)
+                // this.setState({
+                //     login:1
+                // })
+                this.render()
+            }else {
+                console.log('error - ',response.status)
+                alert('이미 존재하는 아이디입니다')
+            }
+        }).catch(err=>{
+            console.log(err)
         })
     }
     //로그인
     login(event){
         event.preventDefault()
         var data
-        console.log(this.id.value, this.password.value)
+        console.log(this.id.value)
+        if (this.id.value == '' || this.password.value ==''){
+            alert('아이디와 패스워드를 입력해주세요')
+            return
+        }
         fetch('http://localhost:1337/user?id='+this.id.value+'&password='+this.password.value,{
             method:'get'
         }).then(function (response) {
-            if (response.ok) {
-                console.log(response)
-                return response.json()
-            }else {
-                return 'error'
-            }
+            return response.json()
         }).then(responseData => {
             console.log(JSON.stringify(responseData))
             data = JSON.parse(JSON.stringify(responseData))
@@ -60,10 +71,14 @@ class Login_Form_Top extends React.Component{
                 id:data.id,
                 password:data.password,
                 phone:data.phone,
-                userName:data.userName,
-                login:2
+                userName:data.userName
+                // login:2
             })
+            this.props.setLoginState(2)
             this.render()
+        }).catch(err=>{
+            console.log(err)
+            alert('아이디 비밀번호를 확인해주세요')
         })
     }
     //로그아웃
@@ -73,13 +88,14 @@ class Login_Form_Top extends React.Component{
             id:'',
             password:'',
             phone:'',
-            userName:'',
-            login:0
+            userName:''
+            // login:0
         })
+        this.props.setLoginState(0)
         this.render()
     }
     render(){
-        switch (this.state.login){
+        switch (this.props.loginState){
             case 0:
                 return (
                     <div className="login_form">
