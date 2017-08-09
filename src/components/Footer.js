@@ -7,8 +7,8 @@ class Footer extends React.Component{
                 <div>
                     <nav className="footer_nav">
                         <ul className="footer_ul">
-                            <li><a href="">{this.props.footer1}</a></li>
-                            <li><a href="">{this.props.footer2}</a></li>
+                            <li><a href="">Instagram 정보</a></li>
+                            <li><a href="">지원</a></li>
                             <li><a href="">블로그</a></li>
                             <li><a href="">홍보센터</a></li>
                             <li><a href="">API</a></li>

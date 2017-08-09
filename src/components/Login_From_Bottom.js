@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux'
+import {login_out} from "../redux/action";
 
 class Login_From_Bottom extends React.Component{
     constructor(props){
@@ -6,11 +8,11 @@ class Login_From_Bottom extends React.Component{
         this.loginClick = this.loginClick.bind(this)
     }
     loginClick(){
-        this.props.setLoginState(1)
+        this.props.Login_out(1)
         this.render()
     }
     render(){
-        switch (this.props.loginState){
+        switch (this.props.LoginState){
             case 0:
                 return(
                     <div className="login_form">
@@ -25,4 +27,15 @@ class Login_From_Bottom extends React.Component{
     }
 }
 
+let mapStateToProps = (state) =>{
+    return{
+        LoginState:state.fetch.loginState
+    }
+}
+let mapDispatchToProps = (dispatch) =>{
+    return{
+        Login_out:(value)=>dispatch(login_out(value))
+    }
+}
+Login_From_Bottom = connect(mapStateToProps, mapDispatchToProps)(Login_From_Bottom)
 export default Login_From_Bottom;

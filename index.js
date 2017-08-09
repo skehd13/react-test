@@ -7,7 +7,7 @@ const Webpack = require('webpack');
 const Pug = require('pug');
 const HapiSequelize = require('hapi-sequelize');
 const Sequelize = require('sequelize');
-const UserDB = require('./src/UserDB')
+const UserDB = require('./src/DB/UserDB')
 
 const compiler = new Webpack({
     entry:'./src/index.js',
