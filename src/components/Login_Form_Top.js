@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {loginFetch, insertFetchPosts, login_out} from "../redux/action"
+import {loginFetch, insertFetchPosts, login_out, usersFetch, getUser} from "../redux/action"
 
 class Login_Form_Top extends React.Component{
 
@@ -15,14 +15,15 @@ class Login_Form_Top extends React.Component{
     //회원가입
     insert(event){
         event.preventDefault()
-        this.props.Add_User(1, this.id.value, this.password.value, this.phone.value, this.userName.value)
+        this.props.Add_User(0, this.id.value, this.password.value, this.phone.value, this.userName.value)
         this.render()
     }
 
     //로그인
     login(event){
         event.preventDefault()
-        this.props.Login(2, this.id.value, this.password.value)
+        // this.props.Login(2, this.id.value, this.password.value)
+        this.props.GetUser(this.id.value, this.password.value)
         this.render()
     }
 
@@ -37,7 +38,7 @@ class Login_Form_Top extends React.Component{
         switch (this.props.LoginState){
             case 0:
                 return (
-                    <div className="login_form">
+                    <div className="login_form" >
                         <h1>INSTAGRAM</h1>
                         <div>
                             <form onSubmit={this.insert} className="form">
@@ -110,17 +111,22 @@ let mapDispatchToProp = (dispatch) =>{
     return{
         Logout:(loginState)=>dispatch(login_out(loginState)),
         Login:(loginState, id, password) => dispatch(loginFetch(loginState,id, password)),
-        Add_User:(loginState, id, password, phone, userName) => dispatch(insertFetchPosts(loginState, id, password, phone, userName))
+        Add_User:(loginState, id, password, phone, userName) => dispatch(insertFetchPosts(loginState, id, password, phone, userName)),
+        UserFetch:() => dispatch(usersFetch()),
+        GetUser:(id, password) => dispatch(getUser(id, password))
     }
 }
 
 let mapStateToProps = (state) =>{
+
     return{
         Id:state.fetch.id,
         Password:state.fetch.password,
         Phone:state.fetch.phone,
         UserName:state.fetch.userName,
-        LoginState:state.fetch.loginState
+        LoginState:state.fetch.loginState,
+        UserData:state.usersById.users,
+        IsFetching:state.usersById.isFetching
     }
 }
 Login_Form_Top = connect(mapStateToProps, mapDispatchToProp)(Login_Form_Top)

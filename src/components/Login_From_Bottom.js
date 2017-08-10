@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {login_out} from "../redux/action";
+import {login_out, usersFetch} from "../redux/action";
 
 class Login_From_Bottom extends React.Component{
     constructor(props){
@@ -9,6 +9,7 @@ class Login_From_Bottom extends React.Component{
     }
     loginClick(){
         this.props.Login_out(1)
+        this.props.UserFetch()
         this.render()
     }
     render(){
@@ -34,7 +35,8 @@ let mapStateToProps = (state) =>{
 }
 let mapDispatchToProps = (dispatch) =>{
     return{
-        Login_out:(value)=>dispatch(login_out(value))
+        Login_out:(value)=>dispatch(login_out(value)),
+        UserFetch:() => dispatch(usersFetch())
     }
 }
 Login_From_Bottom = connect(mapStateToProps, mapDispatchToProps)(Login_From_Bottom)
