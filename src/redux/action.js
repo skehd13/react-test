@@ -1,9 +1,8 @@
 export const LOGIN_OUT = 'LOGIN_OUT'
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const REQUEST_ADD = 'REQUEST_ADD'
+export const RECEIVE_ADD = 'RECEIVE_ADD'
 export const REQUEST_USERS = 'REQUEST_USERS'
 export const RECEIVE_USERS = 'RECEIVE_USERS'
-export const SELECT_ID = 'SELECT_ID'
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 //로그인상태변경
@@ -14,16 +13,16 @@ export function login_out(value) {
     }
 }
 //회원가입요청
-function requestPosts(loginState) {
+function requestAdd(loginState) {
     return{
-        type:REQUEST_POSTS,
+        type:REQUEST_ADD,
         loginState
     }
 }
 //회원가입완료
-function receivePosts(loginState, json) {
+function receiveAdd(loginState, json) {
     return{
-        type:RECEIVE_POSTS,
+        type:RECEIVE_ADD,
         loginState,
         info:json
     }
@@ -35,9 +34,10 @@ function requestUsers() {
     }
 }
 //모든유저정보완료
-function receiveUsers(json) {
+function receiveUsers(id, json) {
     return{
         type:RECEIVE_USERS,
+        id,
         users:json
     }
 }
@@ -48,35 +48,35 @@ function requestLogin() {
     }
 }
 //로그인성공
-function receiveLogin(loginState, info) {
+function receiveLogin(loginState, users, loginID) {
     return{
         type:RECEIVE_LOGIN,
         loginState,
-        info
+        users,
+        loginID
     }
 }
 //회원가입
-export function insertFetchPosts(loginState, id, password, phone, userName) {
+export function insertFetchPosts(loginState, info) {
     return function (dispatch) {
-        dispatch(requestPosts(loginState))
-        if (id == '' || password =='' || userName =='' || phone == ''){
+        dispatch(requestAdd(loginState))
+        if (info.id == '' || info.password =='' || info.userName =='' || info.phone == ''){
             alert('모든정보를 입력해주세요')
             return
         }
         const insertData = JSON.stringify({
-            id:id,
-            password:password,
-            phone:phone,
-            userName:userName
+            id:info.id,
+            password:info.password,
+            phone:info.phone,
+            userName:info.userName
         })
         return fetch('http://localhost:1337/user',{
             method:'post',
             headers: {'Content-Type':'application/json'},
             body:insertData
         }).then(response => {
-            console.log(response)
             if (response.ok) {
-                dispatch(receivePosts(loginState, JSON.parse(insertData)))
+                dispatch(receiveAdd(loginState, JSON.parse(insertData)))
                 alert('회원가입 완료')
             } else {
                 return Promise.reject('이미 있는 아이디 입니다')
@@ -89,7 +89,7 @@ export function insertFetchPosts(loginState, id, password, phone, userName) {
 //로그인
 export function loginFetch(loginState, id, password) {
     return function (dispatch) {
-        dispatch(requestPosts(loginState))
+        dispatch(requestLogin(loginState))
         if (id == '' || password ==''){
             alert('아이디와 패스워드를 입력해주세요')
             return
@@ -99,7 +99,7 @@ export function loginFetch(loginState, id, password) {
         }).then(response =>{
             return response.json()
         }).then(json => {
-            dispatch(receivePosts(loginState,json))
+            dispatch(receiveLogin(loginState,json))
         }).catch(err =>{
             console.log(err)
             alert('아이디 비밀번호를 확인하세요')
@@ -113,10 +113,20 @@ export function usersFetch() {
         return fetch('http://localhost:1337/users', {
             method:'get'
         }).then(response => {
+            console.log(response)
             return response.json()
         }).then(json => {
-            console.log('json - ',json)
-            dispatch(receiveUsers(json))
+            console.log('json data - ',json)
+            // dispatch(receiveUsers(json))
+            json.map(index => {
+                return dispatch(receiveUsers(index.id, {
+                    id:index.id,
+                    password:index.password,
+                    phone:index.phone,
+                    userName:index.userName,
+                    isLogin:false
+                }))
+            })
         }).catch(err => {
             console.log(err)
         })
@@ -126,24 +136,20 @@ export function usersFetch() {
 //store-userById에서 id와 비밀번호 확인
 export function getUser(id, password) {
     return (dispatch, getState) => {
-        console.log(getState())
         dispatch(requestLogin())
-        var loginFlag = false
-        for (var i in getState().usersById.users){
-            var data = getState().usersById.users[i]
-            console.log(data.id)
-            if (id == data.id && password == data.password){
-                dispatch(receiveLogin(2, {
-                    id:data.id,
-                    password:data.password,
-                    phone:data.phone,
-                    userName:data.userName
-                }))
-                loginFlag = true
-                break
-            }
-        }
-        if (!loginFlag){
+        console.log('state',getState().userById)
+        //아이디 비밀번호 확인
+        if (getState().userById[id] != null && id == getState().userById[id].id && password == getState().userById[id].password) {
+            console.log('get User - ',getState().userById[id].id)
+            var data = getState().userById[id]
+            dispatch(receiveLogin(2, {
+                id: data.id,
+                password: data.password,
+                phone: data.phone,
+                userName: data.userName,
+                isLogin: true
+            }, id))
+        }else {
             alert('아이디 비밀번호를 확인해주세요')
         }
     }

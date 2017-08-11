@@ -13,3 +13,11 @@ store   -fetch      -id
                                     -userName
                                     -createdAt
                                     -updatedAt
+
+store   -userById   -유저아이디  -id
+                              -password
+                              -phone
+                              -userName
+                              -isLogin
+                    -loginState
+                    -loginID

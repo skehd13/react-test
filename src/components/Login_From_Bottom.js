@@ -10,6 +10,9 @@ class Login_From_Bottom extends React.Component{
     loginClick(){
         this.props.Login_out(1)
         this.props.UserFetch()
+        console.log('State - ', this.props.State)
+        console.log('Login ID - ', this.props.LoginID)
+        console.log('Login User - ', this.props.LoginUser)
         this.render()
     }
     render(){
@@ -30,7 +33,10 @@ class Login_From_Bottom extends React.Component{
 
 let mapStateToProps = (state) =>{
     return{
-        LoginState:state.fetch.loginState
+        LoginState:state.userById.loginState,
+        LoginID:state.userById.loginID,
+        LoginUser:state.userById[state.userById.loginID],
+        State:state
     }
 }
 let mapDispatchToProps = (dispatch) =>{

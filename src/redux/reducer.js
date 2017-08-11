@@ -1,90 +1,53 @@
-import {LOGIN_OUT, RECEIVE_POSTS, REQUEST_POSTS, RECEIVE_USERS, REQUEST_USERS, SELECT_ID, RECEIVE_LOGIN} from "./action"
+import {LOGIN_OUT, RECEIVE_USERS, REQUEST_USERS, RECEIVE_LOGIN} from "./action"
 import {combineReducers} from 'redux'
 
-const loginInfoInitialState = {
-    id:'',
-    password:'',
-    phone:'',
-    userName:'',
-    loginState:0,
-}
-
-const fetch = (state = loginInfoInitialState, action) => {
+//유저정보에 대한 컨트롤러
+function users(state = {}, action) {
     switch (action.type){
-        // case RECEIVE_POSTS:
-        //     return Object.assign({}, state, {
-        //         id:action.info.id,
-        //         password:action.info.password,
-        //         phone:action.info.phone,
-        //         userName:action.info.userName,
-        //         loginState:action.loginState
-        //     })
-        // case LOGIN_OUT:
-        //     return Object.assign({}, state, {
-        //         id:'',
-        //         password:'',
-        //         phone:'',
-        //         userName:'',
-        //         loginState:action.loginState
-        //     })
-        // default:
-        //     return state
-        //로그인완료시 로그인정보를 store-fetch에 저장
+        case RECEIVE_LOGIN:
+        case RECEIVE_USERS:
+            return Object.assign({}, state, {
+                id:action.users.id,
+                password:action.users.password,
+                phone:action.users.phone,
+                userName:action.users.userName,
+                isLogin:action.users.isLogin
+            })
+        default :
+            return state
+    }
+}
+//유저정보에대한 store에대한 reducer
+function userById(state = {
+    loginState:0,
+    loginID:''
+}, action) {
+    switch (action.type){
+        //모든유저정보를 가져와서 유저아이디 : 유저정보 형식으로 저장
+        // case REQUEST_USERS:
+        case RECEIVE_USERS:
+            return Object.assign({}, state, {
+                [action.id]: users(state[action.id], action)
+            })
+        //로그인상태와 로그인된 아이디 저장
         case RECEIVE_LOGIN:
             return Object.assign({}, state, {
-                id:action.info.id,
-                password:action.info.password,
-                phone:action.info.phone,
-                userName:action.info.userName,
-                loginState:action.loginState
+                loginState:action.loginState,
+                [action.users.id]: users(state[action.users.id], action),
+                loginID:action.loginID
             })
-        //로그인, 로그아웃버튼 클릭시 store-fetch데이터 변경
+        //로그아웃시 로그인아이디 초기화
         case LOGIN_OUT:
             return Object.assign({}, state, {
-                id:'',
-                password:'',
-                phone:'',
-                userName:'',
-                loginState:action.loginState
+                loginState:action.loginState,
+                loginID:''
             })
         default:
             return state
     }
 }
 
-function usersById(
-    // state = {}, action) {
-    // switch (action.type){
-    //     case RECEIVE_USERS:
-    //     case REQUEST_USERS:
-    //         return Object.assign({}, state, {
-    //             user : users(state[action.id], action)
-    //         })
-    //     default:
-    //         return state
-    // }
-    state = {
-        isFetching:false,
-        users:[]
-    }, action) {
-    switch (action.type){
-        //모든유저정보를 요청
-        case REQUEST_USERS:
-            return Object.assign({}, state, {
-                isFetching:true
-            })
-        //모든유저정보를 가져와서 store-userById에 저장
-        case RECEIVE_USERS:
-            return Object.assign({}, state, {
-                isFetching:false,
-                users: action.users
-            })
-        default: return state
-    }
-}
-
 const loginInfoApp = combineReducers({
-    fetch,
-    usersById
+    userById
 })
 export default loginInfoApp
