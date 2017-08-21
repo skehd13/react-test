@@ -2,19 +2,61 @@ body{
     margin: 0;
 }
 .main{
+    overflow: hidden;
     width: 100%;
     height: 100%;
     object-fit: contain;
     box-shadow: 26.8px 15.5px 24.6px 2.4px rgba(69, 36, 4, 0.2);
 }
 .content{
-    position: relative;
-    float: left;
+    position: absolute;
+    top: 0;
     width:78.1%;
     height: 100%;
     object-fit: contain;
     overflow: hidden;
+    z-index: 0;
 }
+.slide-in{
+    animation-duration: 0.5s;
+    animation-name: slide-in;
+    z-index: 20;
+}
+.slide-out{
+    animation-duration: 2s;
+    animation-name: slide-out;
+    z-index: 1;
+}
+@keyframes slide-in {
+    0%{
+        left:78.1%;
+        top: 0;}
+    100%{
+        left: 0%;
+        top: 0;}
+}
+@keyframes slide-out {
+    0%{
+        display: block;
+        left: 0%;
+        top: 0;
+        z-index: 2;}
+    100%{left: -50%;
+        top: 0;
+        display: none;}
+}
+@keyframes price-animation{
+    0% {
+        transform:  rotate(15deg) ;
+    }
+    50% {
+        transform:  rotate(-15deg) ;
+    }
+    100% {
+        transform:  rotate(15deg) ;
+    }
+}
+
 .main_image {
     width:100%;
     height: 100%;
@@ -26,7 +68,6 @@ body{
     line-height: 0.38;
     letter-spacing: -16.9px;
     color: #ffffff;
-    text-shadow: 4px 0 24.6px rgba(69, 36, 4, 0.3);
     -webkit-text-stroke: 1px #3b250f;
     position: absolute;
     top: 16%;
@@ -40,7 +81,6 @@ body{
     line-height: 0.38;
     letter-spacing: -16.9px;
     color: #ffffff;
-    text-shadow: 4px 0 24.6px rgba(69, 36, 4, 0.3);
     -webkit-text-stroke: 1px #3b250f;
     position: absolute;
     top: 16%;
@@ -54,7 +94,6 @@ body{
     line-height: 0.38;
     letter-spacing: -16.9px;
     color: #ffffff;
-    text-shadow: 4px 0 24.6px rgba(69, 36, 4, 0.3);
     -webkit-text-stroke: 1px #3b250f;
     position: absolute;
     top: 16%;
@@ -69,7 +108,6 @@ body{
     line-height: 0.67;
     letter-spacing: -3.4px;
     color: #ffffff;
-    text-shadow: 4px 0 24.6px rgba(69, 36, 4, 0.3);
     -webkit-text-stroke: 1px #3b250f;
     position: absolute;
     top: 33%;
@@ -83,6 +121,9 @@ body{
     background-image: url("./img/group-6.png");
     width: 12%;
     height: 40%;
+    animation: price-animation linear 3s forwards;
+    animation-iteration-count: infinite;
+    transform-origin: 50% 0%;
 }
 .main_price_text{
     width: 23%;
@@ -105,18 +146,19 @@ body{
     font-size: 23.7px;
     letter-spacing: -0.7px;
     color: #ffffff;
-    text-shadow: 0 0 10px rgba(59, 59, 59, 0.83);
     position: absolute;
     bottom: 1.6%;
     right: 2%;
 }
 .aside{
-    position: relative;
+    position: absolute;
+    right: 0;
     top:0;
-    float: right;
     width: 21.9%;
     height: 100%;
     box-shadow: 4px 0 24.6px 2.4px rgba(69, 36, 4, 0.3);
+    background: #ffffff;
+    z-index: 99;
 }
 .aside_list{
     margin:5% 0 15% 0;
@@ -145,7 +187,6 @@ body{
     font-size: 1.8rem;
     letter-spacing: -1.2px;
     color: #7a6043;
-    text-shadow: 4px 0 0 rgba(0, 0, 0, 0.75);
     -webkit-text-stroke: 2px #8e4d0c;
 }
 .aside_price{

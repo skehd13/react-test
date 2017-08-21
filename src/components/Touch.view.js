@@ -27,14 +27,15 @@ class TouchView extends React.Component{
     render(){
         const contentViews = this.state.title.map((title, index) => (
             <TouchContentView key={index} title={title} price={this.state.price[index]}
-                                index={index} desc={this.state.desc[index]} img = {this.state.img[index]}/>
+                                nowIndex={index} desc={this.state.desc[index]} img = {this.state.img[index]}
+                                changeIndex={this.state.index}/>
         ))
         return(
             <main className="main">
-                {/*{contentViews}*/}
-                <TouchContentView title={this.state.title} price={this.state.price}
-                                  index={this.state.index} desc={this.state.desc}
-                                  img={this.state.img}/>
+                {contentViews}
+                {/*<TouchContentView title={this.state.title} price={this.state.price}*/}
+                                  {/*index={this.state.index} desc={this.state.desc}*/}
+                                  {/*img={this.state.img}/>*/}
                 <TouchAsideView selectMenu={this.selectMenu}
                 title={this.state.title} price={this.state.price} index={this.state.index}/>
             </main>
